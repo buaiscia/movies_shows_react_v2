@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import Directory from '../../components/directory/directory.component';
 
 class Homepage extends Component {
     render() {
         return (
             <div>
-                <h1>index</h1>
+                <Directory />
             </div>
         )
     }
