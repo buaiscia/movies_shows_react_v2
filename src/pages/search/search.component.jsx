@@ -1,11 +1,11 @@
 import React, { Component} from 'react';
 
+import Searching from '../../components/searching/searchig.component';
+
 class Search extends Component {
     render() {
         return(
-            <div>
-                <h1>Search page</h1>
-            </div>
+            <Searching />
         )
     }
 }
