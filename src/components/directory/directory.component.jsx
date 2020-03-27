@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { Redirect, Link, withRouter } from 'react-router-dom';
+import PropTypes from "prop-types";
+
 
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
@@ -19,8 +22,45 @@ class Directory extends Component {
             family: [],
             documentary: [],
             error: false,
-            loading: true
+            loading: true,
+            redirecting: false,
+            id: '',
+            title: '',
+            name: '',
+            description: '',
+            poster: '',
+            popularity: '',
+            vote: ''
         }
+
+    }
+
+    static propTypes = {
+        match: PropTypes.object.isRequired,
+        location: PropTypes.object.isRequired,
+        history: PropTypes.object.isRequired
+    };
+
+    // routeChange = (id, title, name, description, poster, popularity, vote) => {
+    //     let path = `/show`;
+    //     // let history = useHistory();
+    //     // history.push(path);
+    //     return <Redirect to={{
+    //         pathname: path,
+    //         state: {
+    //             id: id,
+    //             title: title,
+    //             name: name,
+    //             description: description,
+    //             poster: poster,
+    //             popularity: popularity,
+    //             vote: vote
+    //         }
+    //     }} />
+
+    //   }
+    clickHandler = () => {
+        this.setState({ redirecting: true });
     }
 
     componentDidMount() {
@@ -61,6 +101,8 @@ class Directory extends Component {
 
     render() {
 
+        const { match, location, history } = this.props;
+
         const responsive = {
             superLargeDesktop: {
                 breakpoint: { max: 4000, min: 3000 },
@@ -100,18 +142,36 @@ class Directory extends Component {
 
 
         const showItems = (items) => {
-            return items.map(item =>
-                (
-                    <div key={item.id}>
-                        <img
-                            alt={`${item.title || item.name} poster`}
-                            src={item.poster} />
+            return items.map(item => {
+                return (
+                    <div
+                        key={item.id}
+                        onClick={() => history.push({
+                            pathname: '/show',
+                            state: {
+                                        id: item.id,
+                                        title: item.title,
+                                        name: item.name,
+                                        description: item.description,
+                                        poster: item.poster,
+                                        popularity: item.popularity,
+                                        vote: item.vote
+                            }
+                    })
+                }>
+                        {item.poster ?
+                            <img
+                                alt={`${item.title || item.name} poster`}
+                                src={item.poster} />
+                            : (<div>
+                                <p>Poster not available</p>
+                            </div>)
+                        }
                         <p>{item.title || item.name}</p>
                     </div>
                 )
-            );
+            });
         }
-
 
         const pathImg = 'https://image.tmdb.org/t/p/w185';
 
@@ -209,4 +269,4 @@ class Directory extends Component {
 
 }
 
-export default Directory;
+export default withRouter(Directory);
