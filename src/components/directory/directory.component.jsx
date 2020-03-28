@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect, Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import PropTypes from "prop-types";
 
 
@@ -36,29 +36,9 @@ class Directory extends Component {
     }
 
     static propTypes = {
-        match: PropTypes.object.isRequired,
-        location: PropTypes.object.isRequired,
         history: PropTypes.object.isRequired
     };
 
-    // routeChange = (id, title, name, description, poster, popularity, vote) => {
-    //     let path = `/show`;
-    //     // let history = useHistory();
-    //     // history.push(path);
-    //     return <Redirect to={{
-    //         pathname: path,
-    //         state: {
-    //             id: id,
-    //             title: title,
-    //             name: name,
-    //             description: description,
-    //             poster: poster,
-    //             popularity: popularity,
-    //             vote: vote
-    //         }
-    //     }} />
-
-    //   }
     clickHandler = () => {
         this.setState({ redirecting: true });
     }
@@ -99,9 +79,12 @@ class Directory extends Component {
         this.setState({ loading: false })
     }
 
+    
+
     render() {
 
-        const { match, location, history } = this.props;
+        const { history } = this.props;
+        // let { paramId } = useParams();
 
         const responsive = {
             superLargeDesktop: {
@@ -143,22 +126,24 @@ class Directory extends Component {
 
         const showItems = (items) => {
             return items.map(item => {
+                // console.log(this.props.match.params.movieId);
+                
+                const movieId = item.id;
                 return (
-                    <div
-                        key={item.id}
+                    <div key={movieId}
                         onClick={() => history.push({
-                            pathname: '/show',
+                            pathname: `/show/${movieId}`,
                             state: {
-                                        id: item.id,
-                                        title: item.title,
-                                        name: item.name,
-                                        description: item.description,
-                                        poster: item.poster,
-                                        popularity: item.popularity,
-                                        vote: item.vote
+                                id: item.id,
+                                title: item.title,
+                                name: item.name,
+                                description: item.description,
+                                poster: item.poster,
+                                popularity: item.popularity,
+                                vote: item.vote
                             }
-                    })
-                }>
+                        })
+                        }>
                         {item.poster ?
                             <img
                                 alt={`${item.title || item.name} poster`}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Redirect } from 'react-router-dom';
 
 import VideoPlayer from '../../components/VideoPlayer/VideoPlayer'; // import the Shaka player video configuration component 
 
@@ -7,7 +7,7 @@ import VideoPlayer from '../../components/VideoPlayer/VideoPlayer'; // import th
 import classes from './showItem.module.css';
 
 const ShowItem = (props) => {
-    // console.log(props.location.state.title);
+    console.log(props.match.params.movieId);
     const locState = props.location.state;
 
     let player = null;
@@ -48,37 +48,39 @@ const ShowItem = (props) => {
     if (isPlayer) {
         player = (<VideoPlayer image={props.location.state.poster} />)
     }
+    if (locState) {
+        return (
+            <div className={classes.mainDiv}>
+                <div className={classes.col1}>
+                    <h1>{locState.title || locState.name}</h1>
+                    <h3>Description</h3>
+                    <p>{locState.description}</p>
+                    <hr />
+                    <p>Popularity: {locState.popularity}</p>
+                    <p style={{ paddingBottom: '5%' }}>Vote: {locState.vote}</p>
 
+                    {/* show the button if the player is unactive */}
+                    {!player ? <button className={classes.buttonShow} onClick={showPlayer}>Watch the trailer</button> : null}
 
-    return (
-        <div className={classes.mainDiv}>
-            <div className={classes.col1}>
-                <h1>{locState.title || locState.name}</h1>
-                <h3>Description</h3>
-                <p>{locState.description}</p>
-                <hr />
-                <p>Popularity: {locState.popularity}</p>
-                <p style={{ paddingBottom: '5%' }}>Vote: {locState.vote}</p>
+                    <br />
 
-                {/* show the button if the player is unactive */}
-                {!player ? <button className={classes.buttonShow} onClick={showPlayer}>Watch the trailer</button> : null}
+                    {/* show the player component */}
+                    {player}
 
-                <br />
+                </div>
 
-                {/* show the player component */}
-                {player}
+                <div className={classes.col2}>
+                    {locState.poster ?
+                        <img alt={`${locState.title} poster`} src={locState.poster} />
+                        : `Poster not available`
+                    }
+                </div>
 
             </div>
+        )
 
-            <div className={classes.col2}>
-                {locState.poster ?
-                    <img alt={`${locState.title} poster`} src={locState.poster} />
-                    : `Poster not available`
-                }
-            </div>
-
-        </div>
-    )
+    }
+    return <Redirect to="/" />
 }
 
 export default withRouter(ShowItem)
