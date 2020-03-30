@@ -4,6 +4,59 @@
     width: 50%;
 }
 
+.mainSearchPage {
+    text-align: center;
+}
+
+.carouselStyle {
+    margin: 2% 0;
+}
+
+.image {
+    cursor: pointer;
+    border-radius: 5%;
+}
+
+.click {
+    cursor: pointer;
+}
+
+.title {
+    padding-top: 2%;
+    text-align: center;
+}
+
+/* responsive */
+
+@media all and (max-width:600px) {
+    .title {
+        font-size: 1.6rem;
+
+    }
+}
+
+@media all and (max-width:1200px) {
+    .title {
+        font-size: 1.6em;
+
+    }
+}
+
+/* responsive */
+
+@media all and (max-width:600px) {
+    .mainSearchPage {
+        padding-top: 10%;
+    }
+
+    .mainSearchPage h2 {
+        font-weight: bold;
+        padding-bottom: 5%;
+    }
+}
+
+
+
 @media all and (max-width:600px) {
     .form {
         width: 70%;

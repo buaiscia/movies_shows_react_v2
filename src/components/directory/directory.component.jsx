@@ -81,7 +81,7 @@ class Directory extends Component {
         this.setState({ loading: false })
     }
 
-    
+
 
     render() {
 
@@ -127,11 +127,12 @@ class Directory extends Component {
 
 
         const showItems = (items) => {
-            if( items.length > 0 ) {
-                return items.map(item => {             
+            if (items.length > 0) {
+                return items.map(item => {
                     const movieId = item.id;
                     return (
                         <div key={movieId}
+                            className={classes.click}
                             onClick={() => history.push({
                                 pathname: `/show/${movieId}`,
                                 state: {
@@ -147,13 +148,14 @@ class Directory extends Component {
                             }>
                             {item.poster ?
                                 <img
+                                    className={classes.image}
                                     alt={`${item.title || item.name} poster`}
                                     src={item.poster} />
                                 : (<div>
                                     <p>Poster not available</p>
                                 </div>)
                             }
-                            <p>{item.title || item.name}</p>
+                            <p className={classes.title}>{item.title || item.name}</p>
                         </div>
                     )
                 });
@@ -163,7 +165,7 @@ class Directory extends Component {
                     <p>Not found</p>
                 </div>
             )
-            
+
         }
 
         const pathImg = 'https://image.tmdb.org/t/p/w185';
@@ -180,7 +182,7 @@ class Directory extends Component {
 
         let show = this.state.error ? <GetErrorHandler /> : <Spinner />
 
-        if(this.state.popMovies.length > 0) {
+        if (this.state.popMovies.length > 0) {
             show = (
                 <div className={classes.mainShowPage}>
                     <h2>Popular movies</h2>
@@ -261,7 +263,7 @@ class Directory extends Component {
                 </div>
             )
         }
-       
+
         if (this.state.loading) {
             show = <Spinner />
         }
@@ -271,7 +273,7 @@ class Directory extends Component {
             <>
                 {show}
             </>
-            
+
         )
     }
 
