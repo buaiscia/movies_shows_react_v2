@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from "prop-types";
 
+import Spinner from '../spinner/spinner.component';
+import GetErrorHandler from '../getErrorHandler/getErrorHandler.component';
 
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
@@ -125,37 +127,43 @@ class Directory extends Component {
 
 
         const showItems = (items) => {
-            return items.map(item => {
-                // console.log(this.props.match.params.movieId);
-                
-                const movieId = item.id;
-                return (
-                    <div key={movieId}
-                        onClick={() => history.push({
-                            pathname: `/show/${movieId}`,
-                            state: {
-                                id: item.id,
-                                title: item.title,
-                                name: item.name,
-                                description: item.description,
-                                poster: item.poster,
-                                popularity: item.popularity,
-                                vote: item.vote
+            if( items.length > 0 ) {
+                return items.map(item => {             
+                    const movieId = item.id;
+                    return (
+                        <div key={movieId}
+                            onClick={() => history.push({
+                                pathname: `/show/${movieId}`,
+                                state: {
+                                    id: item.id,
+                                    title: item.title,
+                                    name: item.name,
+                                    description: item.description,
+                                    poster: item.poster,
+                                    popularity: item.popularity,
+                                    vote: item.vote
+                                }
+                            })
+                            }>
+                            {item.poster ?
+                                <img
+                                    alt={`${item.title || item.name} poster`}
+                                    src={item.poster} />
+                                : (<div>
+                                    <p>Poster not available</p>
+                                </div>)
                             }
-                        })
-                        }>
-                        {item.poster ?
-                            <img
-                                alt={`${item.title || item.name} poster`}
-                                src={item.poster} />
-                            : (<div>
-                                <p>Poster not available</p>
-                            </div>)
-                        }
-                        <p>{item.title || item.name}</p>
-                    </div>
-                )
-            });
+                            <p>{item.title || item.name}</p>
+                        </div>
+                    )
+                });
+            }
+            return (
+                <div>
+                    <p>Not found</p>
+                </div>
+            )
+            
         }
 
         const pathImg = 'https://image.tmdb.org/t/p/w185';
@@ -170,85 +178,100 @@ class Directory extends Component {
         let allDocs = allShows(documentary);
         let allFamily = allShows(family);
 
+        let show = this.state.error ? <GetErrorHandler /> : <Spinner />
+
+        if(this.state.popMovies.length > 0) {
+            show = (
+                <div className={classes.mainShowPage}>
+                    <h2>Popular movies</h2>
+                    <Carousel
+                        className={classes.carouselStyle}
+                        swipeable={true}
+                        draggable={false}
+                        showDots={false}
+                        responsive={responsive}
+                        ssr={false}
+                        infinite={true}
+                        keyBoardControl={true}
+                        containerClass='carousel-container'
+                        removeArrowOnDeviceType={['tablet', 'mobile']}
+                        deviceType={this.props.deviceType}
+                        dotListClass='custom-dot-list-style'
+                        itemClass='carousel-item-padding-40-px'
+                    >
+                        {showItems(allPopMovies)}
+                    </Carousel>
+                    <br />
+                    <h2>Popular series</h2>
+                    <Carousel
+                        className={classes.carouselStyle}
+                        swipeable={true}
+                        draggable={false}
+                        showDots={false}
+                        responsive={responsive}
+                        ssr={false}
+                        infinite={true}
+                        keyBoardControl={true}
+                        containerClass='carousel-container'
+                        removeArrowOnDeviceType={['tablet', 'mobile']}
+                        deviceType={this.props.deviceType}
+                        dotListClass='custom-dot-list-style'
+                        itemClass='carousel-item-padding-40-px'
+                    >
+                        {showItems(allTvShows)}
+                    </Carousel>
+                    <br />
+                    <h2>Documentaries</h2>
+                    <Carousel
+                        className={classes.carouselStyle}
+                        swipeable={true}
+                        draggable={false}
+                        showDots={false}
+                        responsive={responsive}
+                        ssr={false}
+                        infinite={true}
+                        keyBoardControl={true}
+                        containerClass='carousel-container'
+                        removeArrowOnDeviceType={['tablet', 'mobile']}
+                        deviceType={this.props.deviceType}
+                        dotListClass='custom-dot-list-style'
+                        itemClass='carousel-item-padding-40-px'
+                    >
+                        {showItems(allDocs)}
+                    </Carousel>
+                    <br />
+                    <h2>For the family</h2>
+                    <Carousel
+                        className={classes.carouselStyle}
+                        swipeable={true}
+                        draggable={false}
+                        showDots={false}
+                        responsive={responsive}
+                        ssr={false}
+                        infinite={true}
+                        keyBoardControl={true}
+                        containerClass='carousel-container'
+                        removeArrowOnDeviceType={['tablet', 'mobile']}
+                        deviceType={this.props.deviceType}
+                        dotListClass='custom-dot-list-style'
+                        itemClass='carousel-item-padding-40-px'
+                    >
+                        {showItems(allFamily)}
+                    </Carousel>
+                </div>
+            )
+        }
+       
+        if (this.state.loading) {
+            show = <Spinner />
+        }
+
 
         return (
-            <div className={classes.mainShowPage}>
-                <h2>Popular movies</h2>
-                <Carousel
-                    className={classes.carouselStyle}
-                    swipeable={true}
-                    draggable={false}
-                    showDots={false}
-                    responsive={responsive}
-                    ssr={false}
-                    infinite={true}
-                    keyBoardControl={true}
-                    containerClass='carousel-container'
-                    removeArrowOnDeviceType={['tablet', 'mobile']}
-                    deviceType={this.props.deviceType}
-                    dotListClass='custom-dot-list-style'
-                    itemClass='carousel-item-padding-40-px'
-                >
-                    {showItems(allPopMovies)}
-                </Carousel>
-                <br />
-                <h2>Popular series</h2>
-                <Carousel
-                    className={classes.carouselStyle}
-                    swipeable={true}
-                    draggable={false}
-                    showDots={false}
-                    responsive={responsive}
-                    ssr={false}
-                    infinite={true}
-                    keyBoardControl={true}
-                    containerClass='carousel-container'
-                    removeArrowOnDeviceType={['tablet', 'mobile']}
-                    deviceType={this.props.deviceType}
-                    dotListClass='custom-dot-list-style'
-                    itemClass='carousel-item-padding-40-px'
-                >
-                    {showItems(allTvShows)}
-                </Carousel>
-                <br />
-                <h2>Documentaries</h2>
-                <Carousel
-                    className={classes.carouselStyle}
-                    swipeable={true}
-                    draggable={false}
-                    showDots={false}
-                    responsive={responsive}
-                    ssr={false}
-                    infinite={true}
-                    keyBoardControl={true}
-                    containerClass='carousel-container'
-                    removeArrowOnDeviceType={['tablet', 'mobile']}
-                    deviceType={this.props.deviceType}
-                    dotListClass='custom-dot-list-style'
-                    itemClass='carousel-item-padding-40-px'
-                >
-                    {showItems(allDocs)}
-                </Carousel>
-                <br />
-                <h2>For the family</h2>
-                <Carousel
-                    className={classes.carouselStyle}
-                    swipeable={true}
-                    draggable={false}
-                    showDots={false}
-                    responsive={responsive}
-                    ssr={false}
-                    infinite={true}
-                    keyBoardControl={true}
-                    containerClass='carousel-container'
-                    removeArrowOnDeviceType={['tablet', 'mobile']}
-                    deviceType={this.props.deviceType}
-                    dotListClass='custom-dot-list-style'
-                    itemClass='carousel-item-padding-40-px'
-                >
-                    {showItems(allFamily)}
-                </Carousel>
-            </div>
+            <>
+                {show}
+            </>
+            
         )
     }
 
