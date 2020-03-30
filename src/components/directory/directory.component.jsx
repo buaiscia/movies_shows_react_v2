@@ -81,12 +81,9 @@ class Directory extends Component {
         this.setState({ loading: false })
     }
 
-
-
     render() {
 
         const { history } = this.props;
-        // let { paramId } = useParams();
 
         const responsive = {
             superLargeDesktop: {
@@ -110,26 +107,12 @@ class Directory extends Component {
             },
         };
 
-        const allShows = (shows) => {
-            return shows.map(item => {
-                let newObj = {
-                    poster: item['poster_path'] ? pathImg + item['poster_path'] : null,
-                    title: item['title'],
-                    name: item['name'],
-                    id: item['id'],
-                    description: item['overview'],
-                    popularity: item['popularity'],
-                    vote: item['vote_average']
-                }
-                return newObj;
-            });
-        }
-
-
         const showItems = (items) => {
+           const pathImg = 'https://image.tmdb.org/t/p/w185';
             if (items.length > 0) {
                 return items.map(item => {
                     const movieId = item.id;
+                    let poster = pathImg + item.poster_path;
                     return (
                         <div key={movieId}
                             className={classes.click}
@@ -139,18 +122,18 @@ class Directory extends Component {
                                     id: item.id,
                                     title: item.title,
                                     name: item.name,
-                                    description: item.description,
-                                    poster: item.poster,
+                                    description: item.overview,
+                                    poster: poster,
                                     popularity: item.popularity,
-                                    vote: item.vote
+                                    vote: item.vote_average
                                 }
                             })
                             }>
-                            {item.poster ?
+                            {item.poster_path ?
                                 <img
                                     className={classes.image}
                                     alt={`${item.title || item.name} poster`}
-                                    src={item.poster} />
+                                    src={poster} />
                                 : (<div>
                                     <p>Poster not available</p>
                                 </div>)
@@ -168,17 +151,10 @@ class Directory extends Component {
 
         }
 
-        const pathImg = 'https://image.tmdb.org/t/p/w185';
-
-        let movieShow = [...this.state.popMovies];
-        let tvShow = [...this.state.popTV];
+        let movieShows = [...this.state.popMovies];
+        let tvShows= [...this.state.popTV];
         let documentary = [...this.state.documentary];
         let family = [...this.state.family];
-
-        let allPopMovies = allShows(movieShow);
-        let allTvShows = allShows(tvShow);
-        let allDocs = allShows(documentary);
-        let allFamily = allShows(family);
 
         let show = this.state.error ? <GetErrorHandler /> : <Spinner />
 
@@ -201,7 +177,7 @@ class Directory extends Component {
                         dotListClass='custom-dot-list-style'
                         itemClass='carousel-item-padding-40-px'
                     >
-                        {showItems(allPopMovies)}
+                        {showItems(movieShows)}
                     </Carousel>
                     <br />
                     <h2>Popular series</h2>
@@ -220,7 +196,7 @@ class Directory extends Component {
                         dotListClass='custom-dot-list-style'
                         itemClass='carousel-item-padding-40-px'
                     >
-                        {showItems(allTvShows)}
+                        {showItems(tvShows)}
                     </Carousel>
                     <br />
                     <h2>Documentaries</h2>
@@ -239,7 +215,7 @@ class Directory extends Component {
                         dotListClass='custom-dot-list-style'
                         itemClass='carousel-item-padding-40-px'
                     >
-                        {showItems(allDocs)}
+                        {showItems(documentary)}
                     </Carousel>
                     <br />
                     <h2>For the family</h2>
@@ -258,7 +234,7 @@ class Directory extends Component {
                         dotListClass='custom-dot-list-style'
                         itemClass='carousel-item-padding-40-px'
                     >
-                        {showItems(allFamily)}
+                        {showItems(family)}
                     </Carousel>
                 </div>
             )
