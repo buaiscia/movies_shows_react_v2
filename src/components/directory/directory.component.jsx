@@ -34,7 +34,6 @@ class Directory extends Component {
             popularity: '',
             vote: ''
         }
-
     }
 
     static propTypes = {
@@ -107,6 +106,22 @@ class Directory extends Component {
             },
         };
 
+        const params = {
+            className: classes.carouselStyle,
+            swipeable: true,
+            draggable: false,
+            showDots: false,
+            responsive: responsive,
+            ssr: false,
+            infinite: true,
+            keyBoardControl: true,
+            containerClass: 'carousel-container',
+            removeArrowOnDeviceType: ['tablet', 'mobile'],
+            deviceType: this.props.deviceType,
+            dotListClass: 'custom-dot-list-style',
+            itemClass: 'carousel-item-padding-40-px'
+        }
+
         const showItems = (items) => {
            const pathImg = 'https://image.tmdb.org/t/p/w185';
             if (items.length > 0) {
@@ -162,78 +177,22 @@ class Directory extends Component {
             show = (
                 <div className={classes.mainShowPage}>
                     <h2>Popular movies</h2>
-                    <Carousel
-                        className={classes.carouselStyle}
-                        swipeable={true}
-                        draggable={false}
-                        showDots={false}
-                        responsive={responsive}
-                        ssr={false}
-                        infinite={true}
-                        keyBoardControl={true}
-                        containerClass='carousel-container'
-                        removeArrowOnDeviceType={['tablet', 'mobile']}
-                        deviceType={this.props.deviceType}
-                        dotListClass='custom-dot-list-style'
-                        itemClass='carousel-item-padding-40-px'
-                    >
+                    <Carousel {...params}>
                         {showItems(movieShows)}
                     </Carousel>
                     <br />
                     <h2>Popular series</h2>
-                    <Carousel
-                        className={classes.carouselStyle}
-                        swipeable={true}
-                        draggable={false}
-                        showDots={false}
-                        responsive={responsive}
-                        ssr={false}
-                        infinite={true}
-                        keyBoardControl={true}
-                        containerClass='carousel-container'
-                        removeArrowOnDeviceType={['tablet', 'mobile']}
-                        deviceType={this.props.deviceType}
-                        dotListClass='custom-dot-list-style'
-                        itemClass='carousel-item-padding-40-px'
-                    >
+                    <Carousel {...params}>
                         {showItems(tvShows)}
                     </Carousel>
                     <br />
                     <h2>Documentaries</h2>
-                    <Carousel
-                        className={classes.carouselStyle}
-                        swipeable={true}
-                        draggable={false}
-                        showDots={false}
-                        responsive={responsive}
-                        ssr={false}
-                        infinite={true}
-                        keyBoardControl={true}
-                        containerClass='carousel-container'
-                        removeArrowOnDeviceType={['tablet', 'mobile']}
-                        deviceType={this.props.deviceType}
-                        dotListClass='custom-dot-list-style'
-                        itemClass='carousel-item-padding-40-px'
-                    >
+                    <Carousel {...params}>
                         {showItems(documentary)}
                     </Carousel>
                     <br />
                     <h2>For the family</h2>
-                    <Carousel
-                        className={classes.carouselStyle}
-                        swipeable={true}
-                        draggable={false}
-                        showDots={false}
-                        responsive={responsive}
-                        ssr={false}
-                        infinite={true}
-                        keyBoardControl={true}
-                        containerClass='carousel-container'
-                        removeArrowOnDeviceType={['tablet', 'mobile']}
-                        deviceType={this.props.deviceType}
-                        dotListClass='custom-dot-list-style'
-                        itemClass='carousel-item-padding-40-px'
-                    >
+                    <Carousel {...params}>
                         {showItems(family)}
                     </Carousel>
                 </div>

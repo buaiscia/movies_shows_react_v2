@@ -91,28 +91,29 @@ class Searching extends Component {
             },
         };
 
-        const pathImg = 'https://image.tmdb.org/t/p/w185';
-
-        const allShows = (shows) => {
-            return shows.map(item => {
-                let newObj = {
-                    poster: item['poster_path'] ? pathImg + item['poster_path'] : null,
-                    title: item['title'],
-                    name: item['name'],
-                    id: item['id'],
-                    description: item['overview'],
-                    popularity: item['popularity'],
-                    vote: item['vote_average']
-                }
-                return newObj;
-            });
+        const params = {
+            className: classes.carouselStyle,
+            swipeable: true,
+            draggable: false,
+            showDots: false,
+            responsive: responsive,
+            ssr: false,
+            infinite: true,
+            keyBoardControl: true,
+            containerClass: 'carousel-container',
+            removeArrowOnDeviceType: ['tablet', 'mobile'],
+            deviceType: this.props.deviceType,
+            dotListClass: 'custom-dot-list-style',
+            itemClass: 'carousel-item-padding-40-px'
         }
 
 
         const showItems = (items) => {
+            const pathImg = 'https://image.tmdb.org/t/p/w185';
             if (items.length > 0) {
                 return items.map(item => {
                     const movieId = item.id;
+                    let poster = pathImg + item.poster_path;
                     return (
                         <div key={movieId}
                             className={classes.click}
@@ -122,18 +123,18 @@ class Searching extends Component {
                                     id: item.id,
                                     title: item.title,
                                     name: item.name,
-                                    description: item.description,
-                                    poster: item.poster,
+                                    description: item.overview,
+                                    poster: poster,
                                     popularity: item.popularity,
-                                    vote: item.vote
+                                    vote: item.vote_average
                                 }
                             })
                             }>
-                            {item.poster ?
+                            {item.poster_path ?
                                 <img
                                     className={classes.image}
                                     alt={`${item.title || item.name} poster`}
-                                    src={item.poster} />
+                                    src={poster} />
                                 : (<div>
                                     <p>Poster not available</p>
                                 </div>)
@@ -175,8 +176,6 @@ class Searching extends Component {
         if (this.state.searched) {
 
             const results = [...this.state.results];
-            let allResults = allShows(results)
-
 
             let show = this.state.error ? <GetErrorHandler /> : <Spinner />
 
@@ -184,21 +183,8 @@ class Searching extends Component {
                 show = (
                     <div className={classes.mainSearchPage}>
                         <h2>Search results: </h2>
-                        <Carousel
-                            className={classes.carouselStyle}
-                            swipeable={true}
-                            draggable={false}
-                            showDots={false}
-                            responsive={responsive}
-                            ssr={false}
-                            infinite={true}
-                            keyBoardControl={true}
-                            containerClass='carousel-container'
-                            removeArrowOnDeviceType={['tablet', 'mobile']}
-                            deviceType={this.props.deviceType}
-                            dotListClass='custom-dot-list-style'
-                            itemClass='carousel-item-padding-40-px'>
-                            {showItems(allResults)}
+                        <Carousel {...params}>
+                            {showItems(results)}
                         </Carousel>
                     </div>
                 )
