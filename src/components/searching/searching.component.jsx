@@ -12,6 +12,8 @@ import 'react-multi-carousel/lib/styles.css';
 import instance from '../axios-instance/axios-instance';
 import config from '../../config/config';
 
+import noPoster from '../../assets/images/poster_not_avail.jpg';
+
 import classes from './searching.module.css';
 
 class Searching extends Component {
@@ -135,9 +137,7 @@ class Searching extends Component {
                                     className={classes.image}
                                     alt={`${item.title || item.name} poster`}
                                     src={poster} />
-                                : (<div>
-                                    <p>Poster not available</p>
-                                </div>)
+                                : (<img style={{maxHeight: '260px'}} src={noPoster} alt="no poster available"/>)
                             }
                             <p className={classes.title}>{item.title || item.name}</p>
                         </div>
