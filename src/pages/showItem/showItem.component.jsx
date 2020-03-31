@@ -7,7 +7,6 @@ import VideoPlayer from '../../components/VideoPlayer/VideoPlayer'; // import th
 import classes from './showItem.module.css';
 
 const ShowItem = (props) => {
-    console.log(props.match.params.movieId);
     const locState = props.location.state;
 
     let player = null;

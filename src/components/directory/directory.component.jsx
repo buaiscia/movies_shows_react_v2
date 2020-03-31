@@ -176,22 +176,22 @@ class Directory extends Component {
         if (this.state.popMovies.length > 0) {
             show = (
                 <div className={classes.mainShowPage}>
-                    <h2>Popular movies</h2>
+                    <h1>POPULAR MOVIES</h1>
                     <Carousel {...params}>
                         {showItems(movieShows)}
                     </Carousel>
                     <br />
-                    <h2>Popular series</h2>
+                    <h1>POPULAR SERIES</h1>
                     <Carousel {...params}>
                         {showItems(tvShows)}
                     </Carousel>
                     <br />
-                    <h2>Documentaries</h2>
+                    <h1>DOCUMENTARIES</h1>
                     <Carousel {...params}>
                         {showItems(documentary)}
                     </Carousel>
                     <br />
-                    <h2>For the family</h2>
+                    <h1>FOR THE FAMILY</h1>
                     <Carousel {...params}>
                         {showItems(family)}
                     </Carousel>

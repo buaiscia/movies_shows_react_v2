@@ -3,6 +3,12 @@
     padding-top: 2%;
 }
 
+.mainShowPage h1 {
+    font-family: 'EB Garamond', serif;
+    font-size: 3.5rem;
+    text-shadow: 2px 2px rgb(255, 75, 75, 0.6);
+}
+
 .carouselStyle {
     margin: 2% 0;
 }
@@ -38,7 +44,10 @@
 @media all and (max-width:600px) {
     .title {
         font-size: 1.6rem;
-
+    }
+    .mainShowPage h1 {
+        font-size: 2.5rem;
+        text-shadow: 1px 1px rgb(255, 75, 75, 0.4);
     }
 }
 
