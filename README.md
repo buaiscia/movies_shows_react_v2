@@ -1,68 +1,81 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# TMDb React app
 
-## Available Scripts
+Frontend application using The Movie Database API. Built with React.
 
-In the project directory, you can run:
+## Getting started
 
-### `npm start`
+Clone the repo locally
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```git clone 'link' ```
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+Install packages
 
-### `npm test`
+```npm install```
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Insert your own API key into /src/config/config.js and save it
 
-### `npm run build`
+```config.apiKey = 'keyHere';```
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Run it
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+```npm start```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+As per notes below, the visualization of the HSL stream is possible only on IE/Edge.
 
-### `npm run eject`
+#### Or for Production mode
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```npm run-script build```
+```serve -s build```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Structure
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+   - [README.md](README.md)
+   - [axios\-orders.js](axios-orders.js)
+   - [package\-lock.json](package-lock.json)
+   - [package.json](package.json)
+   - __src__
+     - [App.css](src/App.css)
+     - [App.js](src/App.js)
+     - __assets__
+       - __images__
+         - [poster\_not\_avail.jpg](src/assets/images/poster_not_avail.jpg)
+         - [tmdb.svg](src/assets/images/tmdb.svg)
+     - __components__
+       - __VideoPlayer__
+         - [VideoPlayer.jsx](src/components/VideoPlayer/VideoPlayer.jsx)
+       - __axios\-instance__
+         - [axios\-instance.js](src/components/axios-instance/axios-instance.js)
+       - __directory__
+         - [directory.component.jsx](src/components/directory/directory.component.jsx)
+         - [directory.module.css](src/components/directory/directory.module.css)
+       - __getErrorHandler__
+         - [getErrorHandler.component.jsx](src/components/getErrorHandler/getErrorHandler.component.jsx)
+         - [getErrorHandler.css](src/components/getErrorHandler/getErrorHandler.css)
+       - __header__
+         - [header.component.jsx](src/components/header/header.component.jsx)
+         - [header.module.css](src/components/header/header.module.css)
+       - __searching__
+         - [searching.component.jsx](src/components/searching/searching.component.jsx)
+         - [searching.module.css](src/components/searching/searching.module.css)
+       - __spinner__
+         - [spinner.component.jsx](src/components/spinner/spinner.component.jsx)
+         - [spinner.module.css](src/components/spinner/spinner.module.css)
+     - __config__
+       - [config.js](src/config/config.js)
+     - [index.css](src/index.css)
+     - [index.js](src/index.js)
+     - __pages__
+       - __homepage__
+         - [homepage.component.jsx](src/pages/homepage/homepage.component.jsx)
+       - __notfound__
+         - [notfound.component.jsx](src/pages/notfound/notfound.component.jsx)
+       - __search__
+         - [search.component.jsx](src/pages/search/search.component.jsx)
+       - __showItem__
+         - [showItem.component.jsx](src/pages/showItem/showItem.component.jsx)
+         - [showItem.module.css](src/pages/showItem/showItem.module.css)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+## Notes
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+The Play button doesn't play the actual trailer but an HLS standard streaming video via Shaka player, made it compatible with all browsers.
